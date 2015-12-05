@@ -1,0 +1,13 @@
+# TODO: work in progress...
+
+cluster:  ochostats
+# TODO: version
+image:    pferrot/ochostats:TODO
+debug:    true
+ports:
+  # TODO: ochothon to support UDP
+  - 8125 UDP
+
+verbatim:
+  cpu: 1
+  mem: 512
