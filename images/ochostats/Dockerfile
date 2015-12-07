@@ -44,16 +44,13 @@ RUN sed -i "s/^CARBON_CACHE_ENABLED=.*/CARBON_CACHE_ENABLED=true/" /etc/default/
 
 RUN sed -i "s/^ENABLE_LOGROTATION.*/ENABLE_LOGROTATION = True/" /etc/carbon/carbon.conf
 
-# Uncomment in case you need custom storage schemas. 
 ADD resources/carbon/storage-schemas.conf /etc/carbon/storage-schemas.conf
 
-# Uncomment in case you need custom aggregation rules.
-#ADD resources/carbon/storage-aggregation.conf /etc/carbon/storage-aggregation.conf
+ADD resources/carbon/storage-aggregation.conf /etc/carbon/storage-aggregation.conf
 
 #RUN service carbon-cache start
 
 RUN apt-get -y install apache2 libapache2-mod-wsgi
-#RUN apt-get -y install apache2 libapache2-mod-wsgi
 
 RUN a2dissite 000-default
 
@@ -86,4 +83,22 @@ ADD resources/pod /opt/ochostats/pod
 ADD resources/supervisor /etc/supervisor/conf.d
 CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 
-# docker run -d -p 8125:8125/udp -p 3000:3000 -p 3050:80 53115ee22736
+# Init grafana (grafana.ini, configure datasource, change default admin password).
+ADD resources/grafana_init/grafana.ini /etc/grafana/grafana.ini
+
+ADD resources/grafana_init /grafana_init
+
+RUN service postgresql start &&\
+    service grafana-server start &&\
+    service carbon-cache start &&\
+    cd /grafana_init &&\
+    curl -H "Content-Type: application/json" -X POST -d @create_datasource.json http://admin:admin@127.0.0.1:3000/api/datasources &&\
+    curl -H "Content-Type: application/json" -X PUT -d @update_org_name.json http://admin:admin@127.0.0.1:3000/api/org &&\
+    find dashboards -name "*.json" -exec curl -H "Content-Type: application/json" -X POST -d @{} http://admin:admin@127.0.0.1:3000/api/dashboards/db \; &&\
+    curl -H "Content-Type: application/json" -X PUT -d @change_admin_password.json http://admin:admin@127.0.0.1:3000/api/user/password
+    
+# We do not need the json files anymore once they have been "executed".
+RUN rm -rf  /grafana_init
+
+
+# docker run -d -p 8125:8125/udp -p 3000:3000 -p 3050:80 0dd580ddfaac

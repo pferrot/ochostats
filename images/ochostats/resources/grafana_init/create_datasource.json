@@ -1,0 +1,7 @@
+{
+  "name":"graphite_local",
+  "type":"graphite",
+  "url":"http://127.0.0.1:80",
+  "access":"proxy",
+  "basicAuth":false
+}
