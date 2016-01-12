@@ -94,11 +94,22 @@ RUN service postgresql start &&\
     cd /grafana_init &&\
     curl -H "Content-Type: application/json" -X POST -d @create_datasource.json http://admin:admin@127.0.0.1:3000/api/datasources &&\
     curl -H "Content-Type: application/json" -X PUT -d @update_org_name.json http://admin:admin@127.0.0.1:3000/api/org &&\
-    find dashboards -name "*.json" -exec curl -H "Content-Type: application/json" -X POST -d @{} http://admin:admin@127.0.0.1:3000/api/dashboards/db \; &&\
     curl -H "Content-Type: application/json" -X PUT -d @change_admin_password.json http://admin:admin@127.0.0.1:3000/api/user/password
     
 # We do not need the json files anymore once they have been "executed".
 RUN rm -rf  /grafana_init
 
+# See https://github.com/nimiq/docker-postgresql93/pull/5
+# work around for AUFS bug
+# as per https://github.com/docker/docker/issues/783#issuecomment-56013588
+RUN mkdir /etc/ssl/private-copy; mv /etc/ssl/private/* /etc/ssl/private-copy/; rm -r /etc/ssl/private; mv /etc/ssl/private-copy /etc/ssl/private; chmod -R 0700     /etc/ssl/private; chown -R postgres /etc/ssl/private
+
+# Make sure that PID file does not exist so that carbon-cache can be properly started by supervisor
+RUN rm -f /var/run/carbon-cache.pid
+
+# PostgreSQL data dir
+#VOLUME /var/lib/postgresql/9.3/main
+#VOLUME /var/lib/graphite
+#VOLUME /var/lib/grafana
 
 # docker run -d -p 8125:8125/udp -p 3000:3000 -p 3050:80 0dd580ddfaac
