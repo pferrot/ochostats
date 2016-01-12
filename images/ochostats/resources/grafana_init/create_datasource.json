@@ -3,5 +3,6 @@
   "type":"graphite",
   "url":"http://127.0.0.1:80",
   "access":"proxy",
+  "isDefault":true,
   "basicAuth":false
 }
