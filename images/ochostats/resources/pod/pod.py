@@ -30,6 +30,8 @@ if __name__ == '__main__':
         cwd = '/opt/ochostats'
         
         check_every = 60.0
+        
+        pipe_subprocess = True
 
         pid = None
 
