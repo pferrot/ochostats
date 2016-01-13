@@ -36,3 +36,6 @@ RUN rm -rf  /grafana_init
 # Make sure that PID file does not exist so that carbon-cache can be properly started by supervisor
 RUN rm -f /var/run/carbon-cache.pid
 
+# Create volumes so that data is not lost and possible to backup.
+VOLUME /var/lib/graphite /var/lib/grafana /var/lib/postgresql/9.3/main
+
