@@ -37,7 +37,7 @@ Regardless of the option that you choose (using the base image directly or creat
   
 ## Release notes
 
-### 0.2 (1/11/2016)
+### 0.2 (1/13/2016)
 - Existing base image (pferrot/ochostats:1.0.6_20151029154900CET_0.2) with instructions on how to extend it
 - Created datasource marked as default datasource
 - Fixed bug preventing PostgreSQL from starting up due to file permission issue
