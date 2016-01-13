@@ -31,7 +31,7 @@ Use the files under images/extend/images as template and adapt to your needs as 
 ### Deploying Ochostats
 
 Regardless of the option that you choose (using the base image directly or creating your own one):
-- Deploy your image to you Mesos/Marathon cluster with <a href="https://github.com/autodesk-cloud/ochothon" target="_blank">Ochothon</a> thanks to the file ochothon-ochostats.yml or ochothon_custom-ochostats.yml that you just modified (depending on the option that you chose above)
+- Deploy your image to you Mesos/Marathon cluster with <a href="https://github.com/autodesk-cloud/ochothon" target="_blank">Ochothon</a> thanks to the file ochothon-ochostats.yml or ochothon_custom-ochostats.yml that you just modified (depending on the option that you choose)
 - Configure your Ochopod clusters that you want to submit metrics to depend on 'ochostats' (or whatever name you gave it) and send StatsD metrics to Ochostats UDP port 8125 (this is the container port - use Ochopod as usual to send the packets to the proper host and port)
 - Access the Grafana UI at http://&lt;ochostats_host&gt;:3000 (get the IP/host thanks to Ochothon or the Marathon UI) and start monitoring and building beautiful graphs
   
