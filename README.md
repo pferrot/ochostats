@@ -5,8 +5,8 @@ Ochostats provides a ready to use <a href="https://github.com/autodesk-cloud/och
 ## Instructions
 
 You can have two options to use Ochostats:
-1) Either use the base image (pferrot/ochostats:1.0.6_20151029154900CET_0.2) as is and e.g. customize dashboards from grafana UI once the container is up and running.
-2) Or (recommended option) create your own Docker image by extending the Ochostats base image and include whatever customization you need (e.g. dashboards) directly within your base image. See the example under images/extend and follow the instructions below.
+1. Either use the base image (pferrot/ochostats:1.0.6_20151029154900CET_0.2) as is and e.g. customize dashboards from grafana UI once the container is up and running.
+2. Or (recommended option) create your own Docker image by extending the Ochostats base image and include whatever customization you need (e.g. dashboards) directly within your base image. See the example under images/extend and follow the instructions below.
 Use the files under images/extend/images as template and adapt to your needs as follows:
 - Modify the Dockerfile:
   - Replace 'my_custom_salty_string' with your own random unique secret key for Graphite
@@ -22,9 +22,11 @@ Use the files under images/extend/images as template and adapt to your needs as 
 - Modify the file images/extend/resources/ochothon_custom-ochostats.yml:
   - Set a valid cluster name
   - Replace &lt;your_image_name_here&gt; with the name of the image that you just built
-- Deploy your image to you Mesos/Marathon cluster with <a href="https://github.com/autodesk-cloud/ochothon" target="_blank">Ochothon</a> thanks to the file ochothon_custom-ochostats.yml that you just modified
-- Configure your Ochopod clusters that you want to submit metrics to depend on 'ochostats' and send StatsD metrics to Ochostats UDP port 8125 (this is the container port - use Ochopod as usual to send the packets to the proper host and port)
-- Access the Grafana UI at http://&lt;ochostats_host&gt;:3000 (get the IP/host thanks to Ochothon or the Marathon UI) and start monitoring or building beautiful graphs
+
+Regardless of the option that you choose:
+- Deploy your image to you Mesos/Marathon cluster with <a href="https://github.com/autodesk-cloud/ochothon" target="_blank">Ochothon</a> thanks to the file ochothon-ochostats.yml or ochothon_custom-ochostats.yml that you just modified (depending on the option that you chose above)
+- Configure your Ochopod clusters that you want to submit metrics to depend on 'ochostats' (or whatever name you gave it) and send StatsD metrics to Ochostats UDP port 8125 (this is the container port - use Ochopod as usual to send the packets to the proper host and port)
+- Access the Grafana UI at http://&lt;ochostats_host&gt;:3000 (get the IP/host thanks to Ochothon or the Marathon UI) and start monitoring and building beautiful graphs
   
 ## Release notes
 
