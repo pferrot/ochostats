@@ -106,10 +106,3 @@ RUN mkdir /etc/ssl/private-copy; mv /etc/ssl/private/* /etc/ssl/private-copy/; r
 
 # Make sure that PID file does not exist so that carbon-cache can be properly started by supervisor
 RUN rm -f /var/run/carbon-cache.pid
-
-# PostgreSQL data dir
-#VOLUME /var/lib/postgresql/9.3/main
-#VOLUME /var/lib/graphite
-#VOLUME /var/lib/grafana
-
-# docker run -d -p 8125:8125/udp -p 3000:3000 -p 3050:80 0dd580ddfaac
