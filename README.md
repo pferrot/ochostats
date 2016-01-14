@@ -45,3 +45,6 @@ Regardless of the option that you choose (using the base image directly or creat
 
 ### 0.1 (12/07/2015)
 - First version
+
+## Screenshots 
+![Grafana](grafana.png)
