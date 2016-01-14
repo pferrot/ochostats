@@ -12,7 +12,7 @@ You have two options to use Ochostats:
 
 ### Extending the base image
 
-Use the files under images/extend/images as template and adapt to your needs as follows:
+Use the files under images/extend as template and adapt to your needs as follows:
 - Modify the Dockerfile:
   - Replace 'my_custom_salty_string' with your own random unique secret key for Graphite
   - *Optional*: Configure the Django timezone (search for 'Set your local timezone' in Dockerfile) - defaults to 'America/Los_Angeles'
