@@ -6,5 +6,5 @@ ports:
   - 8125 udp
 
 verbatim:
-  cpu: 1
+  cpus: 1
   mem: 1024  
