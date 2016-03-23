@@ -1,4 +1,4 @@
-FROM pferrot/ochostats:1.0.6_20151029154900CET_0.2
+FROM pferrot/ochostats:1.0.6_20151029154900CET_0.3
 
 # Replace a_salty_string with your own salty string: should be a long, random unique 
 # string to use as a secret key for this install. This key is used for salting of hashes
@@ -18,7 +18,11 @@ ADD resources/statsd/config.js /etc/statsd/localConfig.js
 ADD resources/carbon/storage-schemas.conf /etc/carbon/storage-schemas.conf
 
 # Init grafana (grafana.ini, configure datasource, change default admin password).
+# Note that we use a template for grafana.ini: the actual grafana.ini file is
+# generated in pod.py. This allows to pass some dynamic configuration information
+# to the pod, like the Grafana root URL.
 ADD resources/grafana_init/grafana.ini /etc/grafana/grafana.ini
+ADD resources/grafana_init/templates/grafana.ini /opt/ochostats/templates/grafana.ini
 
 ADD resources/grafana_init /grafana_init
 

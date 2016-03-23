@@ -84,7 +84,11 @@ ADD resources/supervisor /etc/supervisor/conf.d
 CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
 
 # Init grafana (grafana.ini, configure datasource, change default admin password).
+# Note that we use a template for grafana.ini: the actual grafana.ini file is
+# generated in pod.py. This allows to pass some dynamic configuration information
+# to the pod, like the Grafana root URL.
 ADD resources/grafana_init/grafana.ini /etc/grafana/grafana.ini
+ADD resources/grafana_init/templates/grafana.ini /opt/ochostats/templates/grafana.ini
 
 ADD resources/grafana_init /grafana_init
 

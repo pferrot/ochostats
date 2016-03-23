@@ -8,5 +8,9 @@ ports:
 verbatim:
   cpus: 1
   mem: 1024
-
   
+# Optional, specify the Grafana root URL and other Gragana 'server' settings.
+# Convenient e.g. when running Grafana behind a reverse proxy. 
+#settings:
+#  grafana_server:
+#      root_url: http://myserver/path-to-grafana  
