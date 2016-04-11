@@ -6,7 +6,7 @@ Ochostats provides a ready to use <a href="https://github.com/autodesk-cloud/och
 
 You have two options to use Ochostats:
 <ol>
-<li>Either use the base image (pferrot/ochostats:1.0.6_20151029154900CET_0.3) as is and e.g. customize dashboards from grafana UI once the container is up and running.</li>
+<li>Either use the base image (pferrot/ochostats:1.0.6_20151029154900CET_0.3.1) as is and e.g. customize dashboards from grafana UI once the container is up and running.</li>
 <li>Or (recommended option) create your own Docker image by extending the Ochostats base image and include whatever customization you need (e.g. dashboards) directly within your base image. See the example under images/extend and follow the instructions below.</li>
 </ol>
 
