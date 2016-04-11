@@ -9,8 +9,13 @@ verbatim:
   cpus: 1
   mem: 1024
 
-# Optional, specify the Grafana root URL and other Gragana 'server' settings.
-# Convenient e.g. when running Grafana behind a reverse proxy. 
+# Optional, specify the Grafana root URL and other Grafana 'server' settings.
+# Convenient e.g. when running Grafana behind a reverse proxy.
+# Also possible to specify custom Grafana 'session' parameters, which can 
+# be convenient when multiple Ochostats instances are used behind a reverse
+# proxy (so that sessions do not get mixed up).
 #settings:
 #  grafana_server:
-#      root_url: http://myserver/path-to-grafana  
+#      root_url: http://myserver/path-to-grafana
+#  grafana_session:
+#      cookie_name: custom_grafana_sess

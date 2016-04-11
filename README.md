@@ -40,6 +40,9 @@ Regardless of the option that you choose (using the base image directly or creat
   
 ## Release notes
 
+### 0.3.1 (4/11/2016)
+- Allow to specify Grafana 'session' parameters when deploying Ochostats (see example in images/extend/resources/ochothon_custom-ochostats.yml)
+
 ### 0.3 (3/23/2016)
 - All subprocesses (Apache2, Grafana, StatsD, Carbon and PostgreSQL) are now monitored by Ochopod
 - Using template file for grafana.ini: this allows to pass dynamic Grafana configuration when deploying Ochostats (e.g. Grafana root URL)

@@ -149,7 +149,8 @@ if __name__ == '__main__':
 
         def configure(self, _):            
             # Defaults to empty dict if key not present.
-            mappings = {'server': cfg['grafana_server'] if 'grafana_server' in cfg.keys() else {}}
+            mappings = {'server': cfg['grafana_server'] if 'grafana_server' in cfg.keys() else {},
+                        'session': cfg['grafana_session'] if 'grafana_session' in cfg.keys() else {}}
             
             env = Environment(loader=FileSystemLoader("/opt/ochostats/templates"))       
             template = env.get_template('grafana.ini')
