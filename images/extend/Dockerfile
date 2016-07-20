@@ -1,4 +1,4 @@
-FROM pferrot/ochostats:1.0.6_20151029154900CET_0.3.1
+FROM pferrot/ochostats:1.0.7_20160329123700CEST_0.4
 
 # Replace a_salty_string with your own salty string: should be a long, random unique 
 # string to use as a secret key for this install. This key is used for salting of hashes

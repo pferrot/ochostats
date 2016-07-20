@@ -1,7 +1,20 @@
-FROM autodeskls/ochopod:1.0.6_20151029154900CET
+FROM autodeskls/ochopod:1.0.7_20160329123700CEST
 
 # See https://www.digitalocean.com/community/tutorials/how-to-install-and-use-graphite-on-an-ubuntu-14-04-server
-RUN apt-get update && apt-get -y install graphite-web graphite-carbon
+# TODO: now that we upgraded to version 0.9.15 through PIP (see below), it would be best to not install anything with apt-get (version 0.9.12 comes with it),
+# but it still provides some files that we rely on later on and I was too lazy to change all of that for now.
+RUN apt-get update && apt-get -y install graphite-web graphite-carbon wget
+
+RUN apt-get update && apt-get -y install python-dev
+
+RUN pip install --upgrade pip &&\ 
+    pip install --upgrade graphite-web==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
+    pip install --upgrade carbon==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
+    pip install --upgrade whisper==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\
+    # See http://stackoverflow.com/questions/27951317/install-graphite-statsd-getting-error-unknown-carbon-cache
+    rm -rf /usr/local/lib/python2.7/dist-packages/twisted/ &&\
+    pip uninstall -y twisted &&\
+    pip install twisted==16.3.0
 
 RUN apt-get -y install postgresql libpq-dev python-psycopg2
 
@@ -13,6 +26,13 @@ RUN service postgresql start &&\
     psql --command "CREATE DATABASE graphite WITH OWNER graphite;"
 
 USER root
+
+# With the PIP install above, we need to make sure the the local_settings.py is made available to Graphite
+RUN ln -s /etc/graphite/local_settings.py /usr/lib/python2.7/dist-packages/graphite/local_settings.py 
+
+# Update paths for version 0.9.15
+RUN sed -i "s/^GRAPHITE_ROOT.*/GRAPHITE_ROOT='\/var\/lib\/graphite'/" /etc/graphite/local_settings.py &&\
+    sed -i "s/^CONTENT_DIR.*/CONTENT_DIR = '\/usr\/share\/graphite-web\/static'/" /etc/graphite/local_settings.py
 
 # Replace a_salty_string with a long, random unique string to use as a secret key for this
 # install. This key is used for salting of hashes used in auth tokens,

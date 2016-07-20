@@ -1,5 +1,5 @@
 cluster:  ochostats
-image:    pferrot/ochostats:1.0.6_20151029154900CET_0.2
+image:    pferrot/ochostats:1.0.7_20160329123700CEST_0.4
 debug:    true
 ports:
   - 3000 *
