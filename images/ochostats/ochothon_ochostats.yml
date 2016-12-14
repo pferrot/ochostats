@@ -19,3 +19,6 @@ verbatim:
 #      root_url: http://myserver/path-to-grafana
 #  grafana_session:
 #      cookie_name: custom_grafana_sess
+#  grafana_env:
+#      # See http://docs.grafana.org/installation/configuration/#using-environment-variables
+#      GF_SMTP_FROM_ADDRESS: "my_name@domain.com"

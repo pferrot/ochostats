@@ -157,6 +157,7 @@ if __name__ == '__main__':
             with open('/etc/grafana/grafana.ini', 'w') as f:
                 f.write(template.render(mappings))       
 
-            return '/usr/sbin/grafana-server --pidfile=/var/run/grafana-server.pid --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana', {}
+            env_grafana = cfg['grafana_env'] if 'grafana_env' in cfg.keys() else {}
+            return '/usr/sbin/grafana-server --pidfile=/var/run/grafana-server.pid --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana', env_grafana
 
     Pod().boot(Strategy)

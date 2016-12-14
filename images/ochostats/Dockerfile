@@ -91,10 +91,10 @@ ADD resources/statsd/config.js /etc/statsd/localConfig.js
 
 # See http://docs.grafana.org/installation/debian/
 RUN apt-get install -y wget 
-RUN wget https://grafanarel.s3.amazonaws.com/builds/grafana_2.5.0_amd64.deb
+RUN wget https://grafanarel.s3.amazonaws.com/builds/grafana_4.0.2-1481203731_amd64.deb
 RUN apt-get install -y adduser libfontconfig
-RUN dpkg -i grafana_2.5.0_amd64.deb
-RUN rm grafana_2.5.0_amd64.deb
+RUN dpkg -i grafana_4.0.2-1481203731_amd64.deb
+RUN rm grafana_4.0.2-1481203731_amd64.deb
 #RUN service grafana-server start
 #RUN update-rc.d grafana-server defaults 95 10
 
