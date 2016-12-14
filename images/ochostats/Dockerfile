@@ -23,7 +23,9 @@ USER postgres
 # Need to use '&&\' if we want the 'CREATE USER' and 'CREATE DATABASE' commands to work.
 RUN service postgresql start &&\ 
     psql --command "CREATE USER graphite WITH PASSWORD 'password';" &&\
-    psql --command "CREATE DATABASE graphite WITH OWNER graphite;"
+    psql --command "CREATE DATABASE graphite WITH OWNER graphite;" &&\
+    psql --command "CREATE USER grafana WITH PASSWORD 'password';" &&\
+    psql --command "CREATE DATABASE grafana WITH OWNER grafana;"
 
 USER root
 
