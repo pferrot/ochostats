@@ -1,4 +1,4 @@
-FROM autodeskls/ochopod:1.0.7_20160329123700CEST
+FROM autodeskls/ochopod:1.0.7_20161220203100CET
 
 # See https://www.digitalocean.com/community/tutorials/how-to-install-and-use-graphite-on-an-ubuntu-14-04-server
 # TODO: now that we upgraded to version 0.9.15 through PIP (see below), it would be best to not install anything with apt-get (version 0.9.12 comes with it),
@@ -6,6 +6,8 @@ FROM autodeskls/ochopod:1.0.7_20160329123700CEST
 RUN apt-get update && apt-get -y install graphite-web graphite-carbon wget
 
 RUN apt-get update && apt-get -y install python-dev
+
+RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 
 RUN pip install --upgrade pip &&\ 
     pip install --upgrade graphite-web==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
