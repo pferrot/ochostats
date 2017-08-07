@@ -1,7 +1,7 @@
 FROM autodeskls/ochopod:1.0.7_20161220203100CET
 
 # See https://www.digitalocean.com/community/tutorials/how-to-install-and-use-graphite-on-an-ubuntu-14-04-server
-# TODO: now that we upgraded to version 0.9.15 through PIP (see below), it would be best to not install anything with apt-get (version 0.9.12 comes with it),
+# TODO: now that we upgraded to version 0.9.16 through PIP (see below), it would be best to not install anything with apt-get (version 0.9.12 comes with it),
 # but it still provides some files that we rely on later on and I was too lazy to change all of that for now.
 RUN apt-get update && apt-get -y install graphite-web graphite-carbon wget
 
@@ -9,14 +9,16 @@ RUN apt-get update && apt-get -y install python-dev
 
 RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 
-RUN pip install --upgrade pip &&\ 
-    pip install --upgrade graphite-web==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
-    pip install --upgrade carbon==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
-    pip install --upgrade whisper==0.9.15 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\
+RUN pip install --upgrade pip &&\
+    rm -f /usr/local/lib/python2.7/dist-packages/setuptools* &&\
+    pip install --upgrade setuptools &&\
+    pip install --upgrade graphite-web==0.9.16 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
+    pip install --upgrade carbon==0.9.16 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\ 
+    pip install --upgrade whisper==0.9.16 --install-option="--install-scripts=/usr/bin" --install-option="--install-lib=/usr/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" &&\
     # See http://stackoverflow.com/questions/27951317/install-graphite-statsd-getting-error-unknown-carbon-cache
     rm -rf /usr/local/lib/python2.7/dist-packages/twisted/ &&\
     pip uninstall -y twisted &&\
-    pip install twisted==16.3.0
+    pip install twisted==16.6.0
 
 RUN apt-get -y install postgresql libpq-dev python-psycopg2
 
@@ -34,7 +36,7 @@ USER root
 # With the PIP install above, we need to make sure the the local_settings.py is made available to Graphite
 RUN ln -s /etc/graphite/local_settings.py /usr/lib/python2.7/dist-packages/graphite/local_settings.py 
 
-# Update paths for version 0.9.15
+# Update paths for version 0.9.16
 RUN sed -i "s/^GRAPHITE_ROOT.*/GRAPHITE_ROOT='\/var\/lib\/graphite'/" /etc/graphite/local_settings.py &&\
     sed -i "s/^CONTENT_DIR.*/CONTENT_DIR = '\/usr\/share\/graphite-web\/static'/" /etc/graphite/local_settings.py
 
@@ -95,10 +97,10 @@ ADD resources/statsd/config.js /etc/statsd/localConfig.js
 
 # See http://docs.grafana.org/installation/debian/
 RUN apt-get install -y wget 
-RUN wget https://grafanarel.s3.amazonaws.com/builds/grafana_4.0.2-1481203731_amd64.deb
+RUN wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.4.3_amd64.deb
 RUN apt-get install -y adduser libfontconfig
-RUN dpkg -i grafana_4.0.2-1481203731_amd64.deb
-RUN rm grafana_4.0.2-1481203731_amd64.deb
+RUN dpkg -i grafana_4.4.3_amd64.deb
+RUN rm grafana_4.4.3_amd64.deb
 #RUN service grafana-server start
 #RUN update-rc.d grafana-server defaults 95 10
 
