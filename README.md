@@ -6,7 +6,7 @@ Ochostats provides a ready to use <a href="https://github.com/autodesk-cloud/och
 
 You have two options to use Ochostats:
 <ol>
-<li>Either use the base image (pferrot/ochostats:1.0.7_20161220203100CET_0.6) as is and e.g. customize dashboards from grafana UI once the container is up and running.</li>
+<li>Either use the base image (pferrot/ochostats:1.0.7_20161220203100CET_0.6.1) as is and e.g. customize dashboards from grafana UI once the container is up and running.</li>
 <li>Or (recommended option) create your own Docker image by extending the Ochostats base image and include whatever customization you need (e.g. dashboards) directly within your base image. See the example under images/extend and follow the instructions below.</li>
 </ol>
 
@@ -39,6 +39,9 @@ Regardless of the option that you choose (using the base image directly or creat
 - Access the Grafana UI at http://&lt;ochostats_host&gt;:3000 (get the IP/host thanks to Ochothon or the Marathon UI) and start monitoring and building beautiful graphs
   
 ## Release notes
+
+### 0.6.1 (8/21/2017)
+- Better default aggregation rules
 
 ### 0.6 (8/7/2017)
 - Upgraded Grafana to version 4.4.3
