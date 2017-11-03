@@ -106,8 +106,12 @@ RUN rm grafana_4.4.3_amd64.deb
 
 
 ADD resources/pod /opt/ochostats/pod
-ADD resources/supervisor /etc/supervisor/conf.d
-CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+ADD resources/supervisor/ochostats_standard.conf /etc/supervisor/conf.d/ochostats_standard.conf
+ADD resources/supervisor/ochostats_standalone.conf /etc/supervisor/conf.d/ochostats_standalone.conf
+ADD resources/supervisor/supervisord_standalone.conf /etc/supervisor/supervisord_standalone.conf
+ADD resources/supervisor/supervisord_standard.conf /etc/supervisor/supervisord_standard.conf
+# Default command is for the "standard" mode, i.e. when using Mesos/Marathon and Ochopod.
+CMD /usr/bin/supervisord -n -c /etc/supervisor/supervisord_standard.conf
 
 # Init grafana (grafana.ini, configure datasource, change default admin password).
 # Note that we use a template for grafana.ini: the actual grafana.ini file is
